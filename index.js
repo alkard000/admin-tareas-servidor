@@ -26,6 +26,10 @@ app.use(
     '/api/proyectos', 
     require('./routes/proyectos')
 );
+app.use(
+    '/api/tareas', 
+    require('./routes/tareas')
+);
 
 //ARRANCAR LA APP
 app.listen(PORT, () => {
