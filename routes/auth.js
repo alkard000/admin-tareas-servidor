@@ -6,13 +6,17 @@ const {check} = require('express-validator');
 //IMPORTAR CONTROLLADORES
 const authController = require('../controllers/authController');
 
-//CREAR USUARIO ==> API/AUTH
+const auth = require('../middleware/auth');
+
+//INICIAR SESION ==> API/AUTH
 router.post('/', 
-    [
-        check('email', 'Agrega un Email valido').isEmail(),
-        check('password', 'El password debe de rminimo de 6 caracteres').isLength({min : 6})
-    ],
     authController.autenticarUsuario
+);
+
+//OBTIENE EL USUARIO AUTENTICADO
+router.get('/',
+    auth, 
+    authController.usuarioAutenticado
 )
 
 module.exports = router;

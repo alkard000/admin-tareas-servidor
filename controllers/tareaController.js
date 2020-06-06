@@ -13,7 +13,8 @@ exports.crearTarea = async (req, res) => {
     try {
 
         //EXTRAER EL PROYECTO Y COMPROBAR SI EXISTE
-        const {proyecto} = req.body
+        const {proyecto} = req.body;
+        
 
         const existeProyecto = await Proyecto.findById(proyecto);
         if(!existeProyecto){
@@ -40,7 +41,7 @@ exports.obtenerTareas = async (req, res) => {
     //EXTRAER PROYECTO
     try {
         //EXTRAER EL PROYECTO Y COMPROBAR SI EXISTE
-        const {proyecto} = req.body
+        const {proyecto} = req.query;
 
         const existeProyecto = await Proyecto.findById(proyecto);
         if(!existeProyecto){
@@ -85,13 +86,9 @@ exports.actualizarTarea = async (req, res) => {
         //CREAR UN OBJETO CON LA NUEVA INFORMACION
         const nuevaTarea = {};
 
-        if(nombre){
-            nuevaTarea.nombre = nombre;
-        }
-        if(estado){
-            nuevaTarea.estado = estado;
-        }
-
+        nuevaTarea.nombre = nombre;
+        nuevaTarea.estado = estado;
+        
         //GUARDAR TAREA
         tarea = await Tarea.findOneAndUpdate({_id : req.params.id}, nuevaTarea,  {new : true});
 
@@ -107,7 +104,7 @@ exports.actualizarTarea = async (req, res) => {
 exports.eliminarTarea = async (req, res) => {
     try {
         //EXTRAER EL PROYECTO Y COMPROBAR SI EXISTE
-        const {proyecto} = req.body;
+        const {proyecto} = req.query;
 
         //REVISAR SI EXISTE LA TAREA
         let tarea = await Tarea.findById(req.params.id);
@@ -130,6 +127,6 @@ exports.eliminarTarea = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('Hubo u erro')
+        res.status(500).send('Hubo un error')
     } 
 }
